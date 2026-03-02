@@ -12,6 +12,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: clip;
+        }
+
         :root {
             --primary-color: #1e3a8a;
             --secondary-color: #0f172a;
@@ -31,6 +35,7 @@
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: clip;
         }
 
         /* ===== HEADER/BANNER ===== */
@@ -182,6 +187,40 @@
 
             header {
                 padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-brand h1 {
+                font-size: 1.4rem;
+            }
+
+            .header-brand p {
+                font-size: 0.85rem;
+            }
+
+            .trust-badge {
+                font-size: 0.78rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .contact-item {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+
+            .contact-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+
+            .contact-info p {
+                font-size: 0.95rem;
             }
         }
 
@@ -503,28 +542,138 @@
             transition: opacity 0.3s;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+
+            /* Keep the scroll height so the sticky engine has room to work */
             .durability-scroll {
-                height: 350vh;
+                height: 300vh;
+                background: #050505;
             }
 
+            /* Keep sticky — this is the whole point */
+            .durability-sticky {
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            /* Image stack stays full-viewport as before */
+            .dur-img-stack {
+                position: absolute;
+                inset: 0;
+            }
+
+            .dur-img-slide {
+                position: absolute;
+                inset: 0;
+            }
+
+            /* Left text panel: collapse to just the eyebrow + trust line at the very top-left */
             .dur-text-overlay {
-                padding: 0 6vw;
-                justify-content: flex-end;
-                padding-bottom: 7rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: auto;
                 max-width: 100%;
+                padding: 1.2rem 1.2rem 0;
+                justify-content: flex-start;
+                background: none;
+                z-index: 5;
+                /* Hide the bulky promo tagline and feature list — shown only on desktop */
+            }
+
+            .dur-promo-tagline,
+            .dur-features,
+            .dur-trust-line {
+                display: none;
+            }
+
+            /* Right panel: anchor to bottom of screen, full width */
+            .dur-right-panel {
+                position: absolute;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                text-align: left;
+                max-width: 100%;
+                padding: 1.2rem 1.4rem 5rem;
+                z-index: 5;
+                /* Gradient so text is always readable over the image */
                 background: linear-gradient(to top,
-                        rgba(0, 0, 0, 0.9) 0%,
-                        rgba(0, 0, 0, 0.4) 50%,
-                        transparent 100%);
+                        rgba(5, 5, 5, 0.92) 0%,
+                        rgba(5, 5, 5, 0.65) 50%,
+                        rgba(5, 5, 5, 0.0) 100%);
             }
 
             .dur-headline {
-                font-size: 2rem;
+                font-size: clamp(1.6rem, 5vw, 2.4rem);
+                min-height: unset;
+                margin-bottom: 0.6rem;
             }
 
             .dur-sub {
-                font-size: 0.9rem;
+                font-size: 0.88rem;
+                min-height: unset;
+                max-width: 90%;
+            }
+
+            .dur-counter-row {
+                justify-content: flex-start;
+                gap: 1.5rem;
+                margin-top: 0.9rem;
+            }
+
+            /* Stage pill: stay bottom-right (absolute within sticky) */
+            .dur-stage-pill {
+                position: absolute;
+                bottom: 1.2rem;
+                right: 4vw;
+                margin: 0;
+                font-size: 0.74rem;
+            }
+
+            /* Override default ::after gradient on slides to a bottom-heavy one */
+            .dur-img-slide::after {
+                background:
+                    linear-gradient(to top,
+                        rgba(5, 5, 5, 0.92) 0%,
+                        rgba(5, 5, 5, 0.3) 35%,
+                        rgba(5, 5, 5, 0.0) 60%),
+                    linear-gradient(to bottom,
+                        rgba(5, 5, 5, 0.5) 0%,
+                        rgba(5, 5, 5, 0.0) 20%);
+            }
+
+            /* Scroll cue: hide on mobile — no room */
+            .dur-scroll-cue {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .durability-scroll {
+                height: 280vh;
+            }
+
+            .dur-text-overlay {
+                padding: 1rem 1rem 0;
+            }
+
+            .dur-right-panel {
+                padding: 1rem 1rem 4.5rem;
+            }
+
+            .dur-headline {
+                font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+            }
+
+            .dur-sub {
+                font-size: 0.82rem;
+                max-width: 100%;
             }
 
             .dur-counter-row {
@@ -532,11 +681,12 @@
             }
 
             .dur-stage-pill {
-                font-size: 0.72rem;
-                right: 4vw;
-                bottom: 1.5rem;
+                font-size: 0.7rem;
+                padding: 0.5rem 0.9rem;
+                bottom: 1rem;
             }
         }
+
 
         /* ===== BOGUS old IPHONE SHELL - remove residual old rules ===== */
         /* (kept as empty stubs to avoid parse errors from removed HTML) */
@@ -1182,6 +1332,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
+            overflow-x: clip;
         }
 
         /* ===== INTRO SECTION ===== */
@@ -1204,7 +1355,7 @@
         }
 
         .intro-section h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
@@ -1219,7 +1370,7 @@
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -1265,7 +1416,7 @@
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
@@ -1281,6 +1432,8 @@
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            width: 100%;
+            max-width: 100%;
         }
 
         .filter-btn {
@@ -1292,6 +1445,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .filter-btn:hover,
@@ -1302,7 +1456,7 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
@@ -1433,8 +1587,18 @@
 
         .videos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
             gap: 2rem;
+        }
+
+        .videos-grid video {
+            width: 100%;
+            height: auto;
+            max-height: 55vw;
+            min-height: 180px;
+            display: block;
+            border-radius: 12px;
+            background: #000;
         }
 
         .video-card {
@@ -1525,8 +1689,9 @@
             position: relative;
             background: white;
             border-radius: 15px;
-            max-width: 90vw;
-            max-height: 90vh;
+            width: 95vw;
+            max-width: 900px;
+            max-height: 92vh;
             overflow: auto;
             animation: slideUp 0.3s ease;
         }
@@ -1602,6 +1767,7 @@
             gap: 1rem;
             flex-direction: column;
             z-index: 50;
+            max-width: 70px;
         }
 
         .float-btn {
@@ -1637,6 +1803,26 @@
             color: white;
         }
 
+        /* ===== TABLET (769px–1024px) ===== */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .header-brand h1 {
+                font-size: 2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+
+            main {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+        /* ===== MOBILE ≤768px ===== */
         @media (max-width: 768px) {
             .floating-contact {
                 bottom: 1rem;
@@ -1644,15 +1830,81 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+                gap: 1.2rem;
             }
 
-            .section-header h2 {
-                font-size: 2rem;
+            main {
+                padding: 2rem 1rem;
             }
 
-            .intro-section h2 {
-                font-size: 1.8rem;
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ===== EXTRA SMALL ≤480px ===== */
+        @media (max-width: 480px) {
+            main {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .float-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .floating-contact {
+                bottom: 0.75rem;
+                right: 0.75rem;
+                gap: 0.6rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 0.85rem;
+                font-size: 0.82rem;
+            }
+
+            .product-info h3 {
+                font-size: 1.05rem;
+            }
+
+            .feature-card {
+                padding: 1rem;
+            }
+
+            .intro-section {
+                margin-bottom: 2.5rem;
+            }
+
+            .products-section,
+            .videos-section {
+                margin-bottom: 2.5rem;
+            }
+
+            .modal-content {
+                width: 100vw;
+                max-height: 100vh;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .modal {
+                align-items: flex-end;
             }
         }
 
@@ -1722,15 +1974,15 @@
             <div class="dur-img-stack">
                 <!-- Slide 1: Dust impact -->
                 <div class="dur-img-slide active" id="dur-slide-0">
-                    <img src="/videos and images/iphone_dust.jpg" alt="iPhone hit by dust" loading="eager">
+                    <img src="videos and images/iphone_dust.jpg" alt="iPhone hit by dust" loading="eager">
                 </div>
                 <!-- Slide 2: Water splash -->
                 <div class="dur-img-slide" id="dur-slide-1">
-                    <img src="/videos and images/iphone_water.png" alt="iPhone in water" loading="eager">
+                    <img src="videos and images/iphone_water.png" alt="iPhone in water" loading="eager">
                 </div>
                 <!-- Slide 3: Storm / combined -->
                 <div class="dur-img-slide" id="dur-slide-2">
-                    <img src="/videos and images/iphone_storm.png" alt="iPhone surviving storm" loading="eager">
+                    <img src="videos and images/iphone_storm.png" alt="iPhone surviving storm" loading="eager">
                 </div>
             </div>
 
@@ -1856,16 +2108,16 @@
             </div>
 
             <div class="videos-grid">
-                <video width="100%" height="400" controls>
-                    <source src="/videos and images/15promax.mp4" type="video/mp4">
+                <video controls>
+                    <source src="videos and images/15promax.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <video width="100%" height="400" controls>
-                    <source src="/videos and images/16 pro max.mp4" type="video/mp4">
+                <video controls>
+                    <source src="videos and images/16 pro max.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <video width="100%" height="400" controls>
-                    <source src="/videos and images/14 models.mp4" type="video/mp4">
+                <video controls>
+                    <source src="videos and images/14 models.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -1919,7 +2171,7 @@
                 model: "iphone-15",
                 price: "",
                 // originalPrice: "$1099",
-                image: "/videos and images/iphone 15 pro max.png",
+                image: "videos and images/iphone 15 pro max.png",
                 specs: ["256GB", "Titanium", "Mint Condition"],
                 description: "Excellent condition, no scratches",
                 badge: "Hot Deal"
@@ -1930,7 +2182,7 @@
                 model: "iphone-14",
                 price: "",
                 // originalPrice: "$799",
-                image: "/videos and images/iphone 14 pro.png",
+                image: "videos and images/iphone 14 pro.png",
                 specs: ["256GB", "White", "Great Condition"],
                 description: "Fully functional, minor usage",
                 badge: "Available"
@@ -1941,7 +2193,7 @@
                 model: "iphone-16",
                 price: "",
                 // originalPrice: "$699",
-                image: "/videos and images/iphone 16.png",
+                image: "videos and images/iphone 16.png",
                 specs: ["128B", "pacific blue", "Good Condition"],
                 description: "Perfect for compact device lovers",
                 badge: "Popular"
@@ -1952,7 +2204,7 @@
                 model: "iphone-15",
                 price: "",
                 // originalPrice: "$999",
-                image: "/videos and images/iphone 15.png",
+                image: "videos and images/iphone 15.png",
                 specs: ["128GB", "Teal", "Like New"],
                 description: "Barely used, original packaging",
                 badge: "Hot Deal"
@@ -1963,7 +2215,7 @@
                 model: "iphone-14",
                 price: "",
                 // originalPrice: "$799",
-                image: "/videos and images/iphone 14.png",
+                image: "videos and images/iphone 14.png",
                 specs: ["256GB", "red", "Excellent"],
                 description: "Clean IMEI, no cloud lock",
                 badge: "Available"
@@ -1974,7 +2226,7 @@
                 model: "iphone-13 pro max",
                 price: "",
                 // originalPrice: "$599",
-                image: "/videos and images/iphone 13 pro max.png",
+                image: "videos and images/iphone 13 pro max.png",
                 specs: ["128GB", "gold", "Good"],
                 description: "Perfect budget option",
                 badge: "Available"
